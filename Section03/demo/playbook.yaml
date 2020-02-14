@@ -1,0 +1,10 @@
+- name: Deploy a web application
+  hosts: db_and_web_server*
+  tasks:
+    - name: Install required dependencies
+      apt: 
+        name: ['python', 'python-setuptools', 'python-dev', 'build-essential', 'python-pip', 'python-mysqldb'] 
+        state: present
+
+    - include: tasks/deploy_db.yaml
+    - include: tasks/deploy_web.yaml
