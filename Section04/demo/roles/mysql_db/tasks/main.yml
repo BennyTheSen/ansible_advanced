@@ -1,0 +1,26 @@
+---
+# tasks file for mysql_db
+- name: export env variable
+  shell: export LC_ALL=C
+
+- name: Install mysql database
+  apt: 
+    name: ['mysql-server', 'mysql-client'] 
+    state: present
+
+- name: start database
+  service: 
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: create database
+  mysql_db: name={{ db_name }} state=present
+
+- name: create database user
+  mysql_user: 
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: '*.*:All'
+    state: presentp
+    host: '%'
